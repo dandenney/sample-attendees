@@ -1,0 +1,107 @@
+{% block content %} 
+
+  <div class="row">
+
+    <div class="small-6 columns">
+
+      <h1>Registration</h1>
+
+      <label for="firstName">First Name</label>
+      <input id="firstName" name="firstName" tabindex="1" type="text"/>
+
+      <label for="lastName">Last Name</label>
+      <input id="lastName" name="lastName" tabindex="2" type="text" />
+
+      <!-- <label for="workTitle">Work Title</label>
+      <input id="workTitle" name="workTitle" tabindex="3" type="text" />
+
+      <label for="companyName">Company Name</label>
+      <input id="companyName" name="companyName" tabindex="4" type="text" />
+
+      <label for="twitterName">Twitter Name</label>
+      <input id="twitterName" name="twitterName" placeholder="justyourname" tabindex="5" type="text" />
+
+      <label for="githubName">Github Name</label>
+      <input id="githubName" name="githubName" placeholder="justyourname" tabindex="6" type="text" />
+
+      <label for="dribbbleName">Dribbble Name</label>
+      <input id="dribbbleName" name="dribbbleName" placeholder="justyourname" tabindex="7" type="text" />
+
+      <label for="codepenName">Codepen Name</label>
+      <input id="codepenName" name="codepenName" placeholder="justyourname" tabindex="8" type="text" /> -->
+
+      <label for="websiteURL">Website URL</label>
+      <input id="websiteURL" name="websiteURL" placeholder="http://website.com" tabindex="9" type="text" />
+
+      <button id="profileSubmit">Register</button>
+
+    </div>
+
+    <div class="small-6 columns">
+      
+      <div class="row">
+
+        <h2>Registrants</h2>
+
+        <ul class="large-12 columns" id="fb-people">
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+    <script type="text/javascript">
+      
+      $(function() {
+        
+        // Sending data on click
+        $("#profileSubmit").click(function() {
+
+          // Required inclusion to interact with Firebase
+          var messageListRef = new Firebase('https://sample-attendees.firebaseio.com/people/');
+          
+          // Assigning form values to variables
+          var submitFirstName = $("#firstName").val();
+          var submitLastName = $("#lastName").val();
+          // var submitWorkTitle = $("#workTitle").val();
+          // var submitCompanyName = $("#companyName").val();
+          // var submitTwitterName = $("#twitterName").val();
+          // var submitGithubName = $("#githubName").val();
+          // var submitDribbbleName = $("#dribbbleName").val();
+          // var submitCodepenName = $("#codepenName").val();
+          var submitWebsiteURL = $("#websiteURL").val();
+
+          // List of data to be sent to Firebase as a single object
+          messageListRef.push({
+            'firstName': (submitFirstName), 
+            'lastName': (submitLastName),
+            // 'workTitle': (submitLastName),
+            // 'companyName': (submitLastName),
+            // 'twitterName': (submitLastName),
+            // 'githubName': (submitLastName),
+            // 'dribbbleName': (submitLastName),
+            // 'codepenName': (submitLastName),
+            'websiteURL': (submitWebsiteURL)
+          });
+          
+          // Required inclusion for interacting with Firebase
+          var usersRef = new Firebase('https://sample-attendees.firebaseio.com/people/');
+          
+          // Listen for a child to be added, then do this
+          usersRef.on('child_added', function(snapshot) {
+            var firstName = snapshot.val().firstName;
+            var lastName = snapshot.val().lastName;
+            var websiteURL = snapshot.val().websiteURL;
+            $("#fb-people").append(
+              "<li>" + firstName + "&nbsp;" + lastName + "&nbsp;" + "<a href='" +websiteURL + "'>" + "Website" + "</a>" + "</li>");
+          });
+        
+        });
+      });
+    
+    </script>
+	
+{% endblock %}
